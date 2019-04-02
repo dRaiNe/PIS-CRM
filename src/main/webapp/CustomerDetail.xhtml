@@ -1,0 +1,33 @@
+<ui:composition template="/index.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    >
+
+    <ui:define name="title">
+        Zákazník
+    </ui:define>
+
+    <ui:define name="content">
+		<h:form id="form">
+			<input type="hidden" name="id" value="#{customerDetailBean.customer.id}" />		
+			<p:growl id="msgs"/>
+	
+    		<h1>Zákazník <h:outputText value="#{customerDetailBean.customer.degree} #{customerDetailBean.customer.name} #{customerDetailBean.customer.surname}" /></h1>
+    
+    		<h2>Poznámky k zákazníkovi</h2> 
+     		<p:editor id="editor" widgetVar="editorWidget" value="#{customerDetailBean.customer.info}" width="600" />
+     
+    		<h:panelGrid columns="2" style="margin-top: 10px">
+        		<p:commandButton value="Submit" icon="pi pi-save" update=":form:msgs" action="#{customerDetailBean.save}" />
+    		</h:panelGrid>
+   
+		</h:form>
+           
+            <h2>Schůzky se zázníkem</h2> 
+             <p>TODO..</p>
+	</ui:define>
+</ui:composition>

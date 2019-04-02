@@ -5,16 +5,71 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 <h:head>
+	<title><ui:insert name="title">PIS project</ui:insert></title>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 </h:head>
 <h:body>
-	<h1>Hello World PrimeFaces</h1>
+<h:panelGroup id="container">
 
-	<h:form>
-	   <p:editor value="#{editor.value}" />
-	</h:form>
-
+<h:form>
+<p:tabMenu rendered="#{loginBean.loggedAs!=null}" activeIndex="#{param['i']}">
+    <p:menuitem value="Moje schůzky" outcome="index">
+        <f:param name="i" value="0" />
+    </p:menuitem>
+    <p:menuitem value="Zaměstnanci" outcome="Employees">
+        <f:param name="i" value="1" />
+    </p:menuitem>
+    <p:menuitem value="Zákazníci" outcome="Customers">
+        <f:param name="i" value="3" />
+    </p:menuitem>
+    <p:menuitem value="Značky aut" outcome="CarBrands">
+        <f:param name="i" value="4" />
+    </p:menuitem>
+    
+    <p:menuitem update="@all" style="float:right" value="Odhlásit" action="#{loginBean.logout}" />
+</p:tabMenu>
+<p:messages id="msgs"  showDetail="true"/>
+</h:form>
+    
+    
+   
+	<div id="content">
+	
+  <c:if test="#{loginBean.loggedAs!=null}">
+	<ui:insert name="content">
+        TODO - Tady by měl být katalog mých schůzek	
+	</ui:insert>
+  </c:if>
+  
+  <c:if test="#{loginBean.loggedAs==null}">
+  <h:form id="loginForm">
+	  <p:growl id="msgs"/>
+	  <h:panelGrid columns="3" cellpadding="5">
+	  		
+        	<p:outputLabel for="login" value="Login" />
+            <p:inputText id="login" value="#{loginBean.login}" required="true" label="Login">
+                <f:validateLength minimum="2" />
+            </p:inputText>
+            <p:message for="login" display="icon" />
+            
+            <p:outputLabel for="password" value="Heslo" />
+            <h:inputSecret id="password" value="#{loginBean.password}" required="true" label="Heslo">
+                <f:validateLength minimum="2" />
+            </h:inputSecret>
+            <p:message for="password" display="icon" />
+            
+            
+            <p:commandButton value="Login" update=":loginForm:msgs" icon="pi pi-check" action="#{loginBean.validateUserLogin}" />
+      </h:panelGrid>  
+    </h:form>
+   </c:if>
+   
+ </div>
+ 
+</h:panelGroup>	
 </h:body>
 </html>

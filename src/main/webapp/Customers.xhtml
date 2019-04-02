@@ -1,0 +1,102 @@
+<ui:composition template="/index.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    >
+
+    <ui:define name="title">
+        Značky aut
+    </ui:define>
+
+    <ui:define name="content">
+<h:form id="form">
+	<p:growl id="msgs"/>
+	
+    <h1>Zákazníci</h1>
+    
+    <style type="text/css">
+        .ui-chkbox .ui-chkbox-box {margin-right: 5px;}
+    </style> 
+ 	<p:dataTable id="itemtable"  var="item" value="#{customerBean.customers}"  editable="true" editMode="cell"  style="margin-bottom:40px">
+ 	   <p:ajax event="cellEdit" listener="#{customerBean.onCellEdit}" update=":form:msgs :form:itemtable" />
+ 	   
+        <p:column headerText="Id" sortBy="#{item.id}">
+            <h:outputText value="#{item.id}" />
+        </p:column>
+ 
+ 		<p:column headerText="Titul" sortBy="#{item.degree}">
+         <p:cellEditor>
+            <f:facet name="output"><h:outputText value="#{item.degree}" /></f:facet>
+            <f:facet name="input"><p:inputText value="#{item.degree}" style="width:100%"/></f:facet>
+         </p:cellEditor>
+        </p:column>
+ 
+        <p:column headerText="Jméno" sortBy="#{item.name}">
+         <p:cellEditor>
+            <f:facet name="output"><h:outputText value="#{item.name}" /></f:facet>
+            <f:facet name="input"><p:inputText value="#{item.name}" style="width:100%"/></f:facet>
+         </p:cellEditor>
+        </p:column>
+ 
+        <p:column headerText="Přijmení" sortBy="#{item.surname}">
+          <p:cellEditor>
+            <f:facet name="output"><h:outputText value="#{item.surname}" /></f:facet>
+            <f:facet name="input"><p:inputText value="#{item.surname}" style="width:100%"/></f:facet>
+          </p:cellEditor>
+        </p:column>
+        
+        <p:column headerText="Zájem o značku" sortBy="#{item.carBrand.name}">
+          <p:cellEditor>
+            <f:facet name="output">
+            		<h:outputText rendered="#{item.carBrand != null}" value="#{item.carBrand.name}" />
+            		<h:outputText rendered="#{item.carBrand == null}" value="Nepřiřazeno" />
+            </f:facet>
+            <f:facet name="input">
+				<h:selectOneMenu value="#{item.carBrand}" style="width:100%" converter="omnifaces.SelectItemsConverter">
+						<f:selectItem itemLabel="Nepřiřazeno" itemValue="#{null}"  noSelectionOption="true" />
+                        <f:selectItems value="#{customerBean.carBrands}" var="carbrand" itemLabel="#{carbrand.name}" itemValue="#{carbrand}" />
+                </h:selectOneMenu>
+			</f:facet>
+          </p:cellEditor>
+        </p:column>
+
+        <p:column headerText="Přiřazený pracovník" sortBy="#{item.associatedEmpoyee}">
+          <p:cellEditor>
+            <f:facet name="output">
+            		<h:outputText rendered="#{item.carBrand != null and item.associatedEmpoyee != null}" value="#{item.associatedEmpoyee.degree} #{item.associatedEmpoyee.name} #{item.associatedEmpoyee.surname}" />
+            		<h:outputText rendered="#{item.carBrand != null and item.associatedEmpoyee == null}" value="Nepřiřazen" />
+                    <h:outputText rendered="#{item.carBrand == null}" value="Nejdřív vyberte značku" /> 
+            </f:facet>
+            <f:facet name="input"  rendered="#{item.carBrand != null}">
+				<h:selectOneMenu value="#{item.associatedEmpoyee}" style="width:100%" converter="omnifaces.SelectItemsConverter">
+						<f:selectItem itemLabel="Nepřiřazen" itemValue="#{null}" noSelectionOption="true" />
+                        <f:selectItems value="#{customerBean.getEmployees(item.carBrand.id)}" var="carbrand" itemLabel="#{carbrand.degree} #{carbrand.name} #{carbrand.surname}" itemValue="#{carbrand}" />
+                </h:selectOneMenu>
+			</f:facet>
+          </p:cellEditor>
+        </p:column>
+       
+        <p:column style="width:35px">
+                 <p:commandButton value="Detail" update=":form:msgs :form:itemtable" icon="ui-icon-close" action="#{customerBean.detail(item)}"/>
+        </p:column>
+        
+ 		<p:column style="width:35px">
+                 <p:commandButton value="Smazat"  onclick="return window.confirm('Opravdu smazat?')" update=":form:msgs :form:itemtable" icon="ui-icon-close" action="#{customerBean.delete(item)}"/> 
+        </p:column>
+        
+    </p:dataTable>
+    
+     <div class="ui-g">
+         <div class="ui-g-12">
+             <p:commandButton value="Přidat řádek" styleClass="ui-priority-primary" process="@this" update=":form:msgs :form:itemtable"
+                              action="#{customerBean.onAddNew()}"/>
+         </div>
+     </div>
+     
+  </h:form>
+    
+</ui:define>
+</ui:composition>

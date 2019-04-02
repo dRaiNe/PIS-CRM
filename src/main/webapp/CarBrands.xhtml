@@ -1,0 +1,51 @@
+<ui:composition template="/index.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="title">
+        Značky aut
+    </ui:define>
+
+    <ui:define name="content">
+<h:form id="form">
+	<p:growl id="msgs"/>
+	
+    <h1>Značky aut</h1>
+    
+    <style type="text/css">
+        .ui-chkbox .ui-chkbox-box {margin-right: 5px;}
+    </style> 
+ 	<p:dataTable id="itemtable"  var="item" value="#{carBrandBean.carBrands}"  editable="true" editMode="cell"  style="margin-bottom:40px">
+ 	   <p:ajax event="cellEdit" listener="#{carBrandBean.onCellEdit}" update=":form:msgs :form:itemtable" />
+ 	   
+        <p:column headerText="Id" sortBy="#{item.id}">
+            <h:outputText value="#{item.id}" />
+        </p:column>
+ 
+        <p:column headerText="Jméno" sortBy="#{item.name}">
+         <p:cellEditor>
+            <f:facet name="output"><h:outputText value="#{item.name}" /></f:facet>
+            <f:facet name="input"><p:inputText value="#{item.name}" style="width:100%"/></f:facet>
+         </p:cellEditor>
+        </p:column>
+        
+ 		<p:column style="width:35px">
+             <p:commandButton value="Smazat"  onclick="return window.confirm('Opravdu smazat?')" update=":form:msgs :form:itemtable" icon="ui-icon-close" action="#{carBrandBean.delete(item)}"/> 
+        </p:column>
+        
+    </p:dataTable>
+    
+     <div class="ui-g">
+         <div class="ui-g-12">
+             <p:commandButton value="Přidat řádek" styleClass="ui-priority-primary" process="@this" update=":form:msgs :form:itemtable"
+                              action="#{carBrandBean.onAddNew()}"/>
+         </div>
+     </div>
+     
+  </h:form>
+    
+</ui:define>
+</ui:composition>

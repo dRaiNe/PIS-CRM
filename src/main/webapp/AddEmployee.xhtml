@@ -1,0 +1,74 @@
+<ui:composition template="/index.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="title">
+        Přidat zaměstnance
+    </ui:define>
+
+    <ui:define name="content">
+
+
+<h:form>
+    <p:panel id="panel" header="Přidat zaměstnance">
+ 
+        <p:messages id="msgs" />
+ 
+        <h:panelGrid columns="3" cellpadding="5">
+        	<p:outputLabel for="login" value="Login" />
+            <p:inputText id="login" value="#{employeesBean.newEmployee.login}" required="true" label="Login">
+                <f:validateLength minimum="2" />
+            </p:inputText>
+            <p:message for="login" display="icon" />
+        
+            <p:outputLabel for="degree" value="Titul" />
+            <p:inputText id="degree" value="#{employeesBean.newEmployee.degree}" label="Titul" />
+            <p:message for="degree" display="icon" />
+                     
+            <p:outputLabel for="firstname" value="Jméno" />
+            <p:inputText id="firstname" value="#{employeesBean.newEmployee.name}" required="true" label="Jméno">
+                <f:validateLength minimum="2" />
+            </p:inputText>
+            <p:message for="firstname" display="icon" />
+             
+            <p:outputLabel for="lastname" value="Přijmení" />
+            <p:inputText id="lastname" value="#{employeesBean.newEmployee.surname}" label="Přijmení" required="true">
+                <f:validateLength minimum="2" />
+                <p:ajax update="msgLastname" event="keyup" />
+            </p:inputText>
+            <p:message for="lastname" id="msgLastname" display="icon" />
+ 
+            <p:outputLabel for="password" value="Výchozí heslo" />
+            <p:inputText id="password" value="#{employeesBean.newEmployee.password}" label="Výchozí heslo" required="true">
+                <f:validateLength minimum="6" />
+                <p:ajax update="msgPassword" event="keyup" />
+            </p:inputText>
+            <p:message for="password" id="msgPassword" display="icon" /> 
+
+			<p:outputLabel for="type" value="Oprávnění" />
+				<h:selectOneMenu  id="type" value="#{employeesBean.newEmployee.type}" style="width:100%">
+                        <f:selectItems value="#{employeesBean.types}" var="type" itemLabel="#{type}" itemValue="#{type}" />
+                </h:selectOneMenu>
+            <p:message for="type" id="msgType" display="icon" /> 
+            
+            <p:outputLabel for="specialistToBrands" value="Specialista na" />
+				<p:selectManyMenu id="specialistToBrands" value="#{employeesBean.newEmployee.specialistToBrands}"  showCheckbox="true">
+            		<f:selectItems value="#{employeesBean.carBrands}" var="brand" itemLabel="#{brand.name}" itemValue="#{brand}" /> 
+        		</p:selectManyMenu>
+            <p:message for="specialistToBrands" id="msgSpecialistToBrands" display="icon" /> 
+             
+        </h:panelGrid>
+ 
+        <p:commandButton value="Save" update="panel" action="#{employeesBean.saveNew}" icon="pi pi-check" />
+    </p:panel>
+</h:form>
+
+
+
+
+
+    </ui:define>
+</ui:composition>

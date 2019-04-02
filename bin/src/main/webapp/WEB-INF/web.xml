@@ -44,25 +44,4 @@
 		<url-pattern>*.xhtml</url-pattern>
 	</servlet-mapping>
 	
-	 <!--
-	<context-param>
-    <param-name>javax.faces.CONFIG_FILES</param-name>
-    <param-value>
-        WEB-INF/faces-config.xml
-    </param-value>
-    </context-param>
-    -->
-	
-	 <filter>
-    <filter-name>CharsetFilter</filter-name>
-    <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
-      <init-param>
-        <param-name>encoding</param-name>
-        <param-value>UTF-8</param-value>
-      </init-param>
-      <init-param>
-       <param-name>forceEncoding</param-name>
-       <param-value>true</param-value>
-     </init-param>
-  </filter>
 </web-app>
