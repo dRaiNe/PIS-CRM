@@ -2,24 +2,31 @@ package view;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 import org.primefaces.event.CellEditEvent;
 
 import model.CarBrand;
 import model.Customer;
 import model.Employee;
+import model.EmployeeType;
 import service.CarBrandManager;
 import service.CustomerManager;
 import service.EmployeeManager;
 
 @ManagedBean(name="customerBean")
 public class CustomerBeen {
+	@PersistenceContext
+    private EntityManager em;
+	
 	@Inject
 	private CustomerManager customerMgr;
 	
@@ -32,12 +39,32 @@ public class CustomerBeen {
 	private List<Customer> tableDataList;
 	private List<CarBrand> carBrandList;
 	
+	private boolean enableAdd;
+	
+	public boolean getEnableAdd() {
+		return enableAdd;
+	}
+
+	public void setEnableAdd(boolean enableAdd) {
+		this.enableAdd = enableAdd;
+	}
+
 	public List <Customer> getCustomers()
     {
     	//kvůli řazení musím načíst jen 1x
-   	 if (tableDataList == null)
-   	        tableDataList = customerMgr.findAll();
-       return tableDataList;
+   	 if (EmployeeManager.getEmpl().getType() != EmployeeType.EMPLOYEE) {
+    	tableDataList = customerMgr.findAll();
+    	enableAdd=true;
+
+   	 } else {
+   		tableDataList = customerMgr.findAll()
+   				.stream()
+   				.filter(e -> e.getAssociatedEmpoyee() != null && e.getAssociatedEmpoyee().equals(EmployeeManager.getEmpl()) )
+   				.collect(Collectors.toList());
+   		enableAdd=false;
+   	 }
+   	 
+      return tableDataList;
     }
 	
 	public List <CarBrand> getCarBrands()

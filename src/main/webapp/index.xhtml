@@ -14,13 +14,13 @@
 </h:head>
 <h:body>
 <h:panelGroup id="container">
-
 <h:form>
+<h:commandLink rendered="#{loginBean.loggedAs!=null}" value="#{loginBean.fullName}" action="#{loginBean.userDetail}" />
 <p:tabMenu rendered="#{loginBean.loggedAs!=null}" activeIndex="#{param['i']}">
     <p:menuitem value="Moje schůzky" outcome="index">
         <f:param name="i" value="0" />
     </p:menuitem>
-    <p:menuitem value="Zaměstnanci" outcome="Employees">
+    <p:menuitem value="Zaměstnanci" outcome="Employees" rendered="#{loginBean.typeValue!=loginBean.lowestType}">
         <f:param name="i" value="1" />
     </p:menuitem>
     <p:menuitem value="Zákazníci" outcome="Customers">

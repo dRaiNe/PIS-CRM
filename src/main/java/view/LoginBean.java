@@ -1,26 +1,78 @@
 package view;
 
+import java.io.IOException;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 import model.Customer;
 import model.Employee;
+import model.EmployeeType;
 import service.EmployeeManager;
  
 @ManagedBean @SessionScoped
 public class LoginBean {
+	
 	@Inject
 	private EmployeeManager employeeMgr;
+	
+	@PersistenceContext
+    private EntityManager em;
+	
+	private Employee emp;
+    
+    private EmployeeType type;
 	
     private String Login;
     private String password;
  
     private Customer loggedAs;
     
-    public String getLogin() {
+    private String typeValue;
+    
+    private String lowestType;
+    
+    private String fullName;
+    
+    public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+    
+	public String getFullName() {
+		return emp.getName() + " " + emp.getSurname();
+	}
+
+	public String getLowestType() {
+		return lowestType;
+	}
+
+	public void setLowestType(String lowestType) {
+		this.lowestType = lowestType;
+	}
+
+	public String getTypeValue() {
+		return typeValue;
+	}
+
+	public void setTypeValue(String typeValue) {
+		this.typeValue = typeValue;
+	}
+    
+    public EmployeeType getType() {
+		return type;
+	}
+
+	public void setType(EmployeeType type) {
+		this.type = type;
+	}
+
+	public String getLogin() {
         return Login;
     }
  
@@ -35,21 +87,34 @@ public class LoginBean {
     public void setPassword(String password) {
         this.password = password;
     }
+    
+	public Employee getEmp() {
+		return emp;
+	}
+
+	public void setEmp(Employee emp) {
+		this.emp = emp;
+	}
  
     public String validateUserLogin() {
         String navResult = "";
+        lowestType = "Pracovník";
         System.out.println("Entered Login is= " + Login + ", password is= " + password);
         
-        Employee emp=employeeMgr.findByLogin(Login);
+        emp = employeeMgr.findByLogin(Login);
+        EmployeeManager.setEmpl(emp);
+        type = emp.getType();
+        typeValue = type.toString();
+        fullName = getFullName();
         
         if (emp!=null && emp.checkPassword(password)) {
         	 loggedAs = new Customer();
              navResult = "success";          
         } else {
     		FacesContext fContext = FacesContext.getCurrentInstance();
-    		
     		fContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Špatné uživatelské jméno nebo heslo",null));
         }
+        
         return navResult;
     }
     
@@ -61,4 +126,16 @@ public class LoginBean {
 	public Customer getLoggedAs() {
 		return loggedAs;
 	}
+	
+    public void userDetail() {
+    	FacesContext fContext = FacesContext.getCurrentInstance();
+    	ExternalContext extContext = fContext.getExternalContext();
+    	try {
+			extContext.redirect("EmployeeDetail.xhtml?id="+emp.getId());
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+    }
+	
 }

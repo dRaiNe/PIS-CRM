@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf15555922657360" configfile="/PIS-CRM/src/main/webapp/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="*" x="122" y="178" id="pf15557059207670" referenceLink="//@navigationRule.1/@fromViewId|" outlinks="pf15557598851256 pf15557598916277" path="*"/>
+  <nodes xsi:type="pageflow:PFPage" name="index.xhtml" x="338" y="178" id="pf15557059207682" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" outlinks="pf15557608990189" inlinks="pf15557598851256 pf15557608990189" path="/index.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="AddEmployee.xhtml" x="122" y="562" id="pf15557059207683" referenceLink="//@navigationRule.2/@fromViewId|" outlinks="pf15557059207684" path="/AddEmployee.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="Employees.xhtml" x="338" y="562" id="pf15557059207685" referenceLink="//@navigationRule.2/@navigationCase.0/@toViewId|" inlinks="pf15557059207684" path="/Employees.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="EmployeeDetail.xhtml" id="pf15557598916288" referenceLink="//@navigationRule.1/@navigationCase.1/@toViewId|" inlinks="pf15557598916277" path="/EmployeeDetail.xhtml"/>
+  <links id="pf15557059207684" target="pf15557059207685" source="pf15557059207683" outcome="success" redirect="true" fromaction="#{employeesBean.saveNew}"/>
+  <links id="pf15557598851256" target="pf15557059207682" source="pf15557059207670" outcome="logout" redirect="true" fromaction="#{loginBean.logout}"/>
+  <links id="pf15557598916277" target="pf15557598916288" source="pf15557059207670" outcome="detail" redirect="true" fromaction="#{loginBean.userDetail}"/>
+  <links id="pf15557608990189" target="pf15557059207682" source="pf15557059207682" outcome="success" redirect="true" fromaction="#{loginBean.validateUserLogin}"/>
+</pageflow:Pageflow>

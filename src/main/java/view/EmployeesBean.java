@@ -9,6 +9,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 import org.primefaces.component.datatable.DataTable;
 import org.primefaces.event.CellEditEvent;
@@ -20,7 +22,10 @@ import service.CarBrandManager;
 import service.EmployeeManager;
 
 @ManagedBean
-public class EmployeesBean {
+public class EmployeesBean {	
+	@PersistenceContext
+    private EntityManager em;
+	
 	@Inject
 	private EmployeeManager employeeMgr;
 	

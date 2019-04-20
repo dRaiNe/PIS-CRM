@@ -20,7 +20,7 @@
     <style type="text/css">
         .ui-chkbox .ui-chkbox-box {margin-right: 5px;}
     </style> 
- 	<p:dataTable id="itemtable"  var="item" value="#{customerBean.customers}"  editable="true" editMode="cell"  style="margin-bottom:40px">
+ 	<p:dataTable rendered="#{customerBean.customers != null}" id="itemtable"  var="item" value="#{customerBean.customers}"  editable="true" editMode="cell"  style="margin-bottom:40px">
  	   <p:ajax event="cellEdit" listener="#{customerBean.onCellEdit}" update=":form:msgs :form:itemtable" />
  	   
         <p:column headerText="Id" sortBy="#{item.id}">
@@ -89,9 +89,9 @@
         
     </p:dataTable>
     
-     <div class="ui-g">
+     <div class="ui-g" >
          <div class="ui-g-12">
-             <p:commandButton value="Přidat řádek" styleClass="ui-priority-primary" process="@this" update=":form:msgs :form:itemtable"
+             <p:commandButton rendered="#{customerBean.enableAdd}" value="Přidat řádek" styleClass="ui-priority-primary" process="@this" update=":form:msgs :form:itemtable"
                               action="#{customerBean.onAddNew()}"/>
          </div>
      </div>

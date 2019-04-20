@@ -1,0 +1,31 @@
+<ui:composition template="/index.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    >
+
+    <ui:define name="title">
+        Profil zaměstnance
+    </ui:define>
+
+    <ui:define name="content">
+		<h:form id="form">
+			<input type="hidden" name="id" value="#{employeeDetailBean.employee.id}" />		
+			<p:growl id="msgs"/>
+	
+    		<h1>Zaměstnanec <h:outputText value="#{employeeDetailBean.employee.degree} #{employeeDetailBean.employee.name} #{employeeDetailBean.employee.surname}" /></h1>
+  
+     
+    		<h:panelGrid columns="2" style="margin-top: 10px">
+        		<p:commandButton value="Submit" icon="pi pi-save" update=":form:msgs" action="#{employeeDetailBean.save}" />
+    		</h:panelGrid>
+   
+		</h:form>
+           
+            <h2>Schůzky se zázníkem</h2> 
+             <p>TODO..</p>
+	</ui:define>
+</ui:composition>

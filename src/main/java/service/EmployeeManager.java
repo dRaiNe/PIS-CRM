@@ -13,10 +13,21 @@ import model.EmployeeType;
 
 @Stateless
 public class EmployeeManager {
-	 @PersistenceContext
+	 	@PersistenceContext
 	    private EntityManager em;
+	 	
+	 	private static Employee empl;
+	 	
 
-	    public Employee find(Long id)
+	    public static Employee getEmpl() {
+			return empl;
+		}
+
+		public static void setEmpl(Employee empl) {
+			EmployeeManager.empl = empl;
+		}
+
+		public Employee find(Long id)
 	    {
 	    	return em.find(Employee.class, id);
 	    }
