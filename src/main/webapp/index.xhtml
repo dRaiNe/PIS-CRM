@@ -59,7 +59,6 @@
  
 <h:form id="form">
     <p:growl id="msgs" showDetail="true" />
-<!--     <p:inputText value="#{calendarView.date}" /> -->
      
     <h:panelGrid columns="2" cellpadding="5">
         <p:calendar id="inline" value="#{calendarViewBean.date}" mode="inline">
@@ -68,21 +67,7 @@
         </p:calendar>
     </h:panelGrid>
      
-<!--     <p:commandButton value="Submit" update="msgs" action="#{calendarView.click}" icon="pi pi-check" /> -->
 
-    <p:dialog modal="true" resizable="false" header="Values" widgetVar="dlg" showEffect="fold">
-        <p:panelGrid id="display" columns="2" columnClasses="label,value">
-        
-            <h:outputText value="#{calendarViewBean.date}">
-                <f:convertDateTime pattern="MM/dd/yyyy" />
-            </h:outputText>
-
-        </p:panelGrid>
-    </p:dialog>
-
-
-
-<!-- 	START -->
  	   <p:dataTable id="itemtable"  var="item" value="#{meetingBean.getMeetings(calendarViewBean)}"  editable="true" editMode="cell"  style="margin-bottom:40px">
  	   	<p:ajax event="cellEdit" listener="#{meetingBean.onCellEdit}" update=":form:msgs itemtable" /> 
 
@@ -111,7 +96,7 @@
         
     </p:dataTable>
 </h:form>
-<!--   KONEC -->
+
 	<div class="ui-g">
          <div class="ui-g-12">
 				<h:link outcome="AddMeeting"><button class="ui-button ui-widget ui-state-default ui-corner-all" style="padding:10px" >Přidat Meeting</button></h:link>				         

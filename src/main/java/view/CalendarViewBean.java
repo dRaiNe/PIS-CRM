@@ -17,21 +17,12 @@ import org.primefaces.event.SelectEvent;
 public class CalendarViewBean {
  
     private Date date;
+    private Date date2;
  
     @PostConstruct
     public void init() {
     }
  
-//    public void onDateSelect(SelectEvent event) {
-//        FacesContext facesContext = FacesContext.getCurrentInstance();
-//        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-//        facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", format.format(event.getObject())));
-//    }
-// 
-//    public void click() {
-//    	RequestContext.current().ajax().update("form:display");
-//        PrimeFaces.current().executeScript("PF('dlg').show()");
-//    }
  
     public Date getDate() {
         return date;
@@ -41,4 +32,11 @@ public class CalendarViewBean {
         this.date = date;
     }
    
+    public Date getDate2() {
+        return date2;
+    }
+ 
+    public void setDate2(Date date) {
+        this.date2 = date;
+    }
 }

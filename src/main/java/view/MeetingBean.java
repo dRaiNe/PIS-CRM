@@ -67,7 +67,10 @@ public class MeetingBean {
 	
 	
 	/// DB storage part
-	public String saveNew() {
+	public String saveNew(Date date) {
+		newMeeting.setEmployee(employeeManager.getEmpl());
+		newMeeting.setDate(date);
+		
 		meetingMgr.save(newMeeting);
 		
 		FacesContext fContext = FacesContext.getCurrentInstance();
