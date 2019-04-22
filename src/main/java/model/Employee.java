@@ -14,6 +14,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.primefaces.component.paginator.FirstPageLinkRenderer;
+
 import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.FetchType.EAGER;
 import javax.persistence.Enumerated;
@@ -84,6 +86,11 @@ public class Employee {
 	public String getSurname() {
 		return Surname;
 	}
+	
+	public String getFullName() {
+		return Name + Surname;
+	}
+	
 	public EmployeeType getType() {
 		return Type;
 	}

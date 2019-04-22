@@ -9,7 +9,7 @@
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 <h:head>
-	<title><ui:insert name="title">PIS project</ui:insert></title>
+	<title><ui:insert name="title">Moje schůzky</ui:insert></title>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 </h:head>
 <h:body>
@@ -41,8 +41,82 @@
 	
   <c:if test="#{loginBean.loggedAs!=null}">
 	<ui:insert name="content">
-        TODO - Tady by měl být katalog mých schůzek	
+        
+<script type="text/javascript">
+    //<![CDATA[
+    function dateTemplateFunc(date) {
+        return '<span style="background-color:' + ((date.day < 21 && date.day > 10) ? '#81C784' : 'inherit') + ';border-radius:50%;padding: .25em;width: 1.75em; height:1.75em; display:block;">' + date.day + '</span>';
+    }
+    //]]>
+</script>
+
+<style type="text/css">
+    .value {
+        font-weight: bold;
+    }
+</style>
+ 
+ 
+<h:form id="form">
+    <p:growl id="msgs" showDetail="true" />
+<!--     <p:inputText value="#{calendarView.date}" /> -->
+     
+    <h:panelGrid columns="2" cellpadding="5">
+        <p:calendar id="inline" value="#{calendarViewBean.date}" mode="inline">
+	        <p:ajax event="dateSelect" update=":form:msgs itemtable" />
+        </p:calendar>
+    </h:panelGrid>
+     
+<!--     <p:commandButton value="Submit" update="msgs" action="#{calendarView.click}" icon="pi pi-check" /> -->
+
+    <p:dialog modal="true" resizable="false" header="Values" widgetVar="dlg" showEffect="fold">
+        <p:panelGrid id="display" columns="2" columnClasses="label,value">
+        
+            <h:outputText value="#{calendarViewBean.date}">
+                <f:convertDateTime pattern="MM/dd/yyyy" />
+            </h:outputText>
+
+        </p:panelGrid>
+    </p:dialog>
+
+
+
+<!-- 	START -->
+ 	   <p:dataTable id="itemtable"  var="item" value="#{meetingBean.getMeetings(calendarViewBean)}"  editable="true" editMode="cell"  style="margin-bottom:40px">
+<!--  	   <p:ajax event="cellEdit" listener="#{employeesBean.onCellEdit}" update=":form:msgs" />  -->
+
+        <p:column headerText="Id" sortBy="#{item.id}">
+            <h:outputText value="#{item.id}" /> 
+        </p:column>
+
+        <p:column headerText="Zákazník" sortBy="#{item.customer}">
+            <h:outputText value="#{item.customer.fullName}" />
+        </p:column>
+
+		<p:column headerText="Čas" sortBy="#{item.date}">
+            <h:outputText value="#{item.date}" />
+        </p:column>
+
+
+<!--  		<p:column style="width:60px"> -->
+<!--             <p:commandButton value="Smazat"  onclick="return window.confirm('Opravdu smazat?')" update=":form:msgs :form:itemtable" icon="ui-icon-close" action="#{employeesBean.delete(item)}"/> -->
+<!--         </p:column> -->
+        
+    </p:dataTable>
+</h:form>
+<!--   KONEC -->
+	<div class="ui-g">
+         <div class="ui-g-12">
+<!-- 				<h:link outcome="AddMeeting"><button class="ui-button ui-widget ui-state-default ui-corner-all" style="padding:10px" >Přidat meeting</button></h:link>				          -->
+         </div>
+     </div>
+
 	</ui:insert>
+	
+	
+
+  
+	
   </c:if>
   
   <c:if test="#{loginBean.loggedAs==null}">

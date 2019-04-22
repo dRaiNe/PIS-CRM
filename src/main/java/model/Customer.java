@@ -56,6 +56,11 @@ public class Customer {
 	public void setSurname(String surname) {
 		Surname = surname;
 	}
+	
+	public String getFullName() {
+		return Name + Surname;
+	}
+	
 	public String getDegree() {
 		return Degree;
 	}
