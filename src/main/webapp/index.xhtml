@@ -84,7 +84,7 @@
 
 <!-- 	START -->
  	   <p:dataTable id="itemtable"  var="item" value="#{meetingBean.getMeetings(calendarViewBean)}"  editable="true" editMode="cell"  style="margin-bottom:40px">
- 	   <p:ajax event="cellEdit" listener="#{employeesBean.onCellEdit}" update=":form:msgs " /> 
+ 	   	<p:ajax event="cellEdit" listener="#{meetingBean.onCellEdit}" update=":form:msgs itemtable" /> 
 
         <p:column headerText="Id" sortBy="#{item.id}">
             <h:outputText value="#{item.id}" /> 
@@ -98,17 +98,23 @@
             <h:outputText value="#{item.date}" />
         </p:column>
 
+		<p:column headerText="Report" sortBy="#{item.report}">
+         <p:cellEditor>
+            <f:facet name="output"><h:outputText value="#{item.report}" /></f:facet>
+            <f:facet name="input"><p:inputText value="#{item.report}" style="width:100%"/></f:facet>
+         </p:cellEditor>
+        </p:column>
 
-<!--  		<p:column style="width:60px"> -->
-<!--             <p:commandButton value="Smazat"  onclick="return window.confirm('Opravdu smazat?')" update=":form:msgs :form:itemtable" icon="ui-icon-close" action="#{employeesBean.delete(item)}"/> -->
-<!--         </p:column> -->
+ 		<p:column style="width:60px">
+            <p:commandButton value="Smazat"  onclick="return window.confirm('Opravdu smazat?')" update=":form:msgs itemtable" icon="ui-icon-close" action="#{meetingBean.delete(item)}"/>
+        </p:column>
         
     </p:dataTable>
 </h:form>
 <!--   KONEC -->
 	<div class="ui-g">
          <div class="ui-g-12">
-<!-- 				<h:link outcome="AddMeeting"><button class="ui-button ui-widget ui-state-default ui-corner-all" style="padding:10px" >Přidat meeting</button></h:link>				          -->
+				<h:link outcome="AddMeeting"><button class="ui-button ui-widget ui-state-default ui-corner-all" style="padding:10px" >Přidat Meeting</button></h:link>				         
          </div>
      </div>
 

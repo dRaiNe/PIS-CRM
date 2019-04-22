@@ -1,0 +1,64 @@
+<ui:composition template="/index.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="title">
+        Přidat meeting
+    </ui:define>
+
+    <ui:define name="content">
+
+
+<h:form>
+    <p:panel id="panel" header="Přidat meeting">
+ 
+        <p:messages id="msgs" />
+ 
+        <h:panelGrid columns="3" cellpadding="5">
+        	<p:outputLabel for="date" value="Datum" />
+            <p:inputText id="date" value="#{meetingBean.newMeeting.date}" required="true" label="Date">
+            </p:inputText>
+            <p:message for="date" display="icon" />
+        
+            <p:outputLabel for="report" value="Report" />
+            <p:inputText id="report" value="#{meetingBean.newMeeting.report}" required="true" label="Report">
+            </p:inputText>
+            <p:message for="report" display="icon" />
+            
+			<p:outputLabel for="customer" value="Zákazník" />
+<!--             <p:inputText id="customer" value="#{meetingBean.newMeeting.customer}" required="true" label="Zákazník"> -->
+<!--             </p:inputText> -->
+				<h:selectOneMenu  id="customer" value="#{meetingBean.newMeeting.customer}" style="width:100%">
+                        <f:selectItems value="#{customerBean.customerMgr.findAll()}" var="customer" itemLabel="#{customer.getFullName()}" itemValue="#{customer.getId()}" />
+                </h:selectOneMenu>
+            <p:message for="customer" display="icon" />
+
+
+
+<!-- 			<p:outputLabel for="type" value="Oprávnění" /> -->
+<!-- 				<h:selectOneMenu  id="type" value="#{employeesBean.newEmployee.type}" style="width:100%"> -->
+<!--                         <f:selectItems value="#{employeesBean.types}" var="type" itemLabel="#{type}" itemValue="#{type}" /> -->
+<!--                 </h:selectOneMenu> -->
+<!--             <p:message for="type" id="msgType" display="icon" />  -->
+            
+<!--             <p:outputLabel for="specialistToBrands" value="Specialista na" /> -->
+<!-- 				<p:selectManyMenu id="specialistToBrands" value="#{employeesBean.newEmployee.specialistToBrands}"  showCheckbox="true"> -->
+<!--             		<f:selectItems value="#{employeesBean.carBrands}" var="brand" itemLabel="#{brand.name}" itemValue="#{brand}" />  -->
+<!--         		</p:selectManyMenu> -->
+<!--             <p:message for="specialistToBrands" id="msgSpecialistToBrands" display="icon" />  -->
+             
+        </h:panelGrid>
+ 
+        <p:commandButton value="Save" update="panel" action="#{meetingBean.saveNew}" icon="pi pi-check" />
+    </p:panel>
+</h:form>
+
+
+
+
+
+    </ui:define>
+</ui:composition>

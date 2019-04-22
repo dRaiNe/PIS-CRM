@@ -38,10 +38,8 @@ public class MeetingBean {
 	@Inject
 	private EmployeeManager employeeManager;
 	
-//	@Inject
-//	private CalendarViewBean calendarViewBean;
-	
 	private Meeting meeting=new Meeting();
+	
 	private List<Meeting> tableDataList;
 
 	private Meeting newMeeting=new Meeting();
@@ -61,22 +59,53 @@ public class MeetingBean {
 	}
  
 	
-	public List<Meeting> getMeetings(CalendarViewBean calendar) {
-		// kvùli øazení musím naèíst jen 1x
-			
-			tableDataList = meetingMgr.findById(employeeManager.getEmpl(), calendar.getDate());
-//			if (MeetingManager.getEmpl().getType() == EmployeeType.OWNER) {
-//				tableDataList = employeeMgr.findAll();
-//
-//			} else {
-//				tableDataList = employeeMgr.findAll().stream()
-//						.filter(e -> e.getType() == EmployeeType.MANAGER || e.getType() == EmployeeType.EMPLOYEE )
-//						.collect(Collectors.toList());
-//			}
-			
+	public List<Meeting> getMeetings(CalendarViewBean calendar) {	
+		tableDataList = meetingMgr.findById(employeeManager.getEmpl(), calendar.getDate());
 
 		return tableDataList;
-
 	}
 	
+	
+	/// DB storage part
+	public String saveNew() {
+		meetingMgr.save(newMeeting);
+		
+		FacesContext fContext = FacesContext.getCurrentInstance();
+		
+		fContext.addMessage(null, new FacesMessage("Uloženo "));
+
+    	ExternalContext extContext = fContext.getExternalContext();
+    	extContext.getFlash().setKeepMessages(true);
+
+		return "success";
+	}
+	
+	public void onCellEdit(CellEditEvent event) {
+        Object oldValue = event.getOldValue();
+        Object newValue = event.getNewValue();
+         
+        if(newValue != null && !newValue.equals(oldValue)) {
+        	FacesContext context = FacesContext.getCurrentInstance();
+        	Meeting e =context.getApplication().evaluateExpressionGet(context, "#{item}", Meeting.class);
+        	 
+        	meetingMgr.save(e);
+        	
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Zmìny uloženy", "");//pokud bytoho bylo potøeba vypsat víc Pùvodní hodnota: " + oldValue + ", Nová hodnota:" + newValue
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+        }
+    }
+	
+	public void save() {
+		meetingMgr.save(meeting);
+		
+		FacesContext.getCurrentInstance().addMessage(null,
+              new FacesMessage("Uloženo "));
+	}
+	
+    public void delete(Meeting e) {
+    	tableDataList.remove(e);
+    	meetingMgr.remove(e);
+        FacesMessage msg = new FacesMessage("Smazáno", "");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
 }

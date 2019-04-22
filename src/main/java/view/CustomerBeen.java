@@ -49,6 +49,11 @@ public class CustomerBeen {
 		this.enableAdd = enableAdd;
 	}
 
+	public CustomerManager getCustomerMgr() {
+		return this.customerMgr;
+	}
+	
+	
 	public List<Customer> getCustomers() {
 		// kvůli řazení musím načíst jen 1x
 		if (EmployeeManager.getEmpl().getType() == EmployeeType.EMPLOYEE) {
