@@ -41,7 +41,27 @@ public class LoginBean {
     
     private int[] navigation;
     
-    public int[] getNavigation() {
+    private String color = "#2d5986";
+    
+    private String title = "Login";
+    
+    public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
+	}
+
+	public int[] getNavigation() {
 		return navigation;
 	}
 
@@ -126,12 +146,15 @@ public class LoginBean {
     		FacesContext fContext = FacesContext.getCurrentInstance();
     		fContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Špatné uživatelské jméno nebo heslo",null));
         }
-        
+        setColor("none");
+        setTitle("Moje schùzky");
         return navResult;
     }
     
     public String logout() {
     	loggedAs = null;
+    	setColor("#2d5986");
+    	setTitle("Login");
     	return "logout";   
     }
 
