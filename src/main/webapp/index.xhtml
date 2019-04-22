@@ -21,13 +21,13 @@
         <f:param name="i" value="0" />
     </p:menuitem>
     <p:menuitem value="Zaměstnanci" outcome="Employees" rendered="#{loginBean.managment}">
-        <f:param name="i" value="1" />
+        <f:param name="i" value="#{loginBean.navigation[0]}" />
     </p:menuitem>
     <p:menuitem value="Zákazníci" outcome="Customers">
-        <f:param name="i" value="2" />
+        <f:param name="i" value="#{loginBean.navigation[1]}" />
     </p:menuitem>
     <p:menuitem value="Značky aut" outcome="CarBrands">
-        <f:param name="i" value="3" />
+        <f:param name="i" value="#{loginBean.navigation[2]}" />
     </p:menuitem>
     
     <p:menuitem update="@all" style="float:right" value="Odhlásit" action="#{loginBean.logout}" />

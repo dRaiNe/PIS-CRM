@@ -39,7 +39,17 @@ public class LoginBean {
     
     private boolean managment;
     
-    public boolean getManagment() {
+    private int[] navigation;
+    
+    public int[] getNavigation() {
+		return navigation;
+	}
+
+	public void setNavigation(int[] navigation) {
+		this.navigation = navigation;
+	}
+
+	public boolean getManagment() {
 		return managment;
 	}
 
@@ -95,11 +105,18 @@ public class LoginBean {
         emp = employeeMgr.findByLogin(Login);
         EmployeeManager.setEmpl(emp);
         fullName = getFullName();
+        navigation = new int[3];
         
         if( emp.getType() == EmployeeType.ADMIN || emp.getType() == EmployeeType.OWNER ) {
         	setManagment(true);
+        	navigation[0] = 1;
+        	navigation[1] = 2;
+        	navigation[2] = 3;
         } else {
         	setManagment(false);
+        	navigation[0] = -1;
+        	navigation[1] = 1;
+        	navigation[2] = 2;
         }
         
         if (emp!=null && emp.checkPassword(password)) {
