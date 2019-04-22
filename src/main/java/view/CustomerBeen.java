@@ -55,11 +55,16 @@ public class CustomerBeen {
 			tableDataList = customerMgr.findAll().stream().filter(
 					e -> e.getAssociatedEmpoyee() != null && e.getAssociatedEmpoyee().equals(EmployeeManager.getEmpl()))
 					.collect(Collectors.toList());
-			enableAdd = false;
 
 		} else {
 			tableDataList = customerMgr.findAll();
+			
+		}
+		
+		if(EmployeeManager.getEmpl().getType() != EmployeeType.EMPLOYEE ) {
 			enableAdd = true;
+		} else {
+			enableAdd = false;
 		}
 
 		return tableDataList;
