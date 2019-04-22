@@ -63,7 +63,8 @@
      
     <h:panelGrid columns="2" cellpadding="5">
         <p:calendar id="inline" value="#{calendarViewBean.date}" mode="inline">
-	        <p:ajax event="dateSelect" update=":form:msgs itemtable" />
+	        <p:ajax event="dateSelect" update="itemtable" listener="#{meetingBean.getMeetings(calendarViewBean)}" />
+
         </p:calendar>
     </h:panelGrid>
      
@@ -83,7 +84,7 @@
 
 <!-- 	START -->
  	   <p:dataTable id="itemtable"  var="item" value="#{meetingBean.getMeetings(calendarViewBean)}"  editable="true" editMode="cell"  style="margin-bottom:40px">
-<!--  	   <p:ajax event="cellEdit" listener="#{employeesBean.onCellEdit}" update=":form:msgs" />  -->
+ 	   <p:ajax event="cellEdit" listener="#{employeesBean.onCellEdit}" update=":form:msgs " /> 
 
         <p:column headerText="Id" sortBy="#{item.id}">
             <h:outputText value="#{item.id}" /> 

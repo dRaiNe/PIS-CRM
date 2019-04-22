@@ -16,6 +16,7 @@ import javax.persistence.PersistenceContext;
 
 import org.primefaces.component.datatable.DataTable;
 import org.primefaces.event.CellEditEvent;
+import org.primefaces.event.SelectEvent;
 
 import model.CarBrand;
 import model.Employee;
@@ -62,7 +63,7 @@ public class MeetingBean {
 	
 	public List<Meeting> getMeetings(CalendarViewBean calendar) {
 		// kvùli øazení musím naèíst jen 1x
-		if (tableDataList == null) {
+			
 			tableDataList = meetingMgr.findById(employeeManager.getEmpl(), calendar.getDate());
 //			if (MeetingManager.getEmpl().getType() == EmployeeType.OWNER) {
 //				tableDataList = employeeMgr.findAll();
@@ -72,7 +73,8 @@ public class MeetingBean {
 //						.filter(e -> e.getType() == EmployeeType.MANAGER || e.getType() == EmployeeType.EMPLOYEE )
 //						.collect(Collectors.toList());
 //			}
-		}
+			
+
 		return tableDataList;
 
 	}

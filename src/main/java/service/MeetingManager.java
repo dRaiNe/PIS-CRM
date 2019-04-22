@@ -42,7 +42,10 @@ public class MeetingManager {
 	
 	public List <Meeting> findById(Employee emp, Date date)
     {
-		Date start = DateUtils.truncate(new Date(), Calendar.DAY_OF_MONTH);
+		if (date == null)
+			date = new Date();
+		
+		Date start = DateUtils.truncate(date, Calendar.DAY_OF_MONTH);
 		Date end = DateUtils.addDays(start, 1);
 		 
     	 TypedQuery<Meeting> query = em.createQuery("SELECT c FROM Meeting c WHERE c.Employee = :id AND c.Date >= :start "
