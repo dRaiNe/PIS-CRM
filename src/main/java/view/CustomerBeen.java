@@ -51,17 +51,25 @@ public class CustomerBeen {
 
 	public List<Customer> getCustomers() {
 		// kvůli řazení musím načíst jen 1x
-		if (EmployeeManager.getEmpl().getType() != EmployeeType.OWNER) {
+		if (EmployeeManager.getEmpl().getType() == EmployeeType.EMPLOYEE) {
 			tableDataList = customerMgr.findAll().stream().filter(
 					e -> e.getAssociatedEmpoyee() != null && e.getAssociatedEmpoyee().equals(EmployeeManager.getEmpl()))
 					.collect(Collectors.toList());
 
+		} else if (EmployeeManager.getEmpl().getType() == EmployeeType.MANAGER
+				|| EmployeeManager.getEmpl().getType() == EmployeeType.ADMIN) {
+			tableDataList = customerMgr.findAll().stream()
+					.filter(e -> e.getAssociatedEmpoyee() == null
+							|| e.getAssociatedEmpoyee().equals(EmployeeManager.getEmpl())
+							|| EmployeeManager.getEmpl().getSpecialistToBrands().contains(e.getCarBrand()))
+					.collect(Collectors.toList());
 		} else {
+
 			tableDataList = customerMgr.findAll();
-			
+
 		}
-		
-		if(EmployeeManager.getEmpl().getType() != EmployeeType.EMPLOYEE ) {
+
+		if (EmployeeManager.getEmpl().getType() != EmployeeType.EMPLOYEE) {
 			enableAdd = true;
 		} else {
 			enableAdd = false;

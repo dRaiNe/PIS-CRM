@@ -63,7 +63,7 @@
           </p:cellEditor>
         </p:column>
 
-        <p:column headerText="Přiřazený pracovník" sortBy="#{item.associatedEmpoyee}">
+        <p:column headerText="Přiřazený pracovník" sortBy="#{item.associatedEmpoyee}" rendered="#{customerBean.enableAdd}">
           <p:cellEditor>
             <f:facet name="output">
             		<h:outputText rendered="#{item.carBrand != null and item.associatedEmpoyee != null}" value="#{item.associatedEmpoyee.degree} #{item.associatedEmpoyee.name} #{item.associatedEmpoyee.surname}" />
