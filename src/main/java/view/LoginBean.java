@@ -34,13 +34,20 @@ public class LoginBean {
  
     private Customer loggedAs;
     
-    private String typeValue;
-    
-    private String lowestType;
     
     private String fullName;
     
-    public void setFullName(String fullName) {
+    private boolean managment;
+    
+    public boolean getManagment() {
+		return managment;
+	}
+
+	public void setManagment(boolean isManagment) {
+		this.managment = isManagment;
+	}
+
+	public void setFullName(String fullName) {
 		this.fullName = fullName;
 	}
     
@@ -48,21 +55,6 @@ public class LoginBean {
 		return emp.getName() + " " + emp.getSurname();
 	}
 
-	public String getLowestType() {
-		return lowestType;
-	}
-
-	public void setLowestType(String lowestType) {
-		this.lowestType = lowestType;
-	}
-
-	public String getTypeValue() {
-		return typeValue;
-	}
-
-	public void setTypeValue(String typeValue) {
-		this.typeValue = typeValue;
-	}
     
     public EmployeeType getType() {
 		return type;
@@ -98,14 +90,17 @@ public class LoginBean {
  
     public String validateUserLogin() {
         String navResult = "";
-        lowestType = "Pracovník";
         System.out.println("Entered Login is= " + Login + ", password is= " + password);
         
         emp = employeeMgr.findByLogin(Login);
         EmployeeManager.setEmpl(emp);
-        type = emp.getType();
-        typeValue = type.toString();
         fullName = getFullName();
+        
+        if( emp.getType() == EmployeeType.ADMIN || emp.getType() == EmployeeType.OWNER ) {
+        	setManagment(true);
+        } else {
+        	setManagment(false);
+        }
         
         if (emp!=null && emp.checkPassword(password)) {
         	 loggedAs = new Customer();

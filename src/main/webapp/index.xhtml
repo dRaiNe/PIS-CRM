@@ -15,12 +15,12 @@
 <h:body>
 <h:panelGroup id="container">
 <h:form>
-<h:commandLink rendered="#{loginBean.loggedAs!=null}" value="#{loginBean.fullName}" action="#{loginBean.userDetail}" />
+<p:commandLink rendered="#{loginBean.loggedAs!=null}" value="#{loginBean.fullName}" action="#{loginBean.userDetail}" style="text-decoration:none; color:#008080; font-weight:600"/>
 <p:tabMenu rendered="#{loginBean.loggedAs!=null}" activeIndex="#{param['i']}">
     <p:menuitem value="Moje schůzky" outcome="index">
         <f:param name="i" value="0" />
     </p:menuitem>
-    <p:menuitem value="Zaměstnanci" outcome="Employees" rendered="#{loginBean.typeValue!=loginBean.lowestType}">
+    <p:menuitem value="Zaměstnanci" outcome="Employees" rendered="#{loginBean.managment}">
         <f:param name="i" value="1" />
     </p:menuitem>
     <p:menuitem value="Zákazníci" outcome="Customers">
@@ -57,7 +57,7 @@
             <p:message for="login" display="icon" />
             
             <p:outputLabel for="password" value="Heslo" />
-            <h:inputSecret id="password" value="#{loginBean.password}" required="true" label="Heslo">
+            <h:inputSecret id="password" value="#{loginBean.password}" required="true" label="Heslo" class="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all">
                 <f:validateLength minimum="2" />
             </h:inputSecret>
             <p:message for="password" display="icon" />

@@ -16,16 +16,24 @@
 			<input type="hidden" name="id" value="#{employeeDetailBean.employee.id}" />		
 			<p:growl id="msgs"/>
 	
-    		<h1>Zaměstnanec <h:outputText value="#{employeeDetailBean.employee.degree} #{employeeDetailBean.employee.name} #{employeeDetailBean.employee.surname}" /></h1>
-  
+    		<h1>Profil zaměstnance</h1>
+  			
+  			
      
     		<h:panelGrid columns="2" style="margin-top: 10px">
+    			<p:outputLabel for="dgr">Degree:</p:outputLabel>
+				<p:inputText value="#{employeeDetailBean.employee.degree}" id="dgr"></p:inputText>
+				
+				
+				    			<p:outputLabel for="name">Name:</p:outputLabel>
+				<p:inputText value="#{employeeDetailBean.employee.name}" id="name"></p:inputText>
+				
+				    			<p:outputLabel for="surname">Surname:</p:outputLabel>
+				<p:inputText value="#{employeeDetailBean.employee.surname}" id="surname"></p:inputText>
+				
         		<p:commandButton value="Submit" icon="pi pi-save" update=":form:msgs" action="#{employeeDetailBean.save}" />
     		</h:panelGrid>
    
 		</h:form>
-           
-            <h2>Schůzky se zázníkem</h2> 
-             <p>TODO..</p>
 	</ui:define>
 </ui:composition>

@@ -3,6 +3,7 @@ package view;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -74,12 +75,21 @@ public class EmployeesBean {
 	}
 	
 	
-    public List<Employee> getEmployees() {
-    	//kvůli řazení musím načíst jen 1x
-    	 if (tableDataList == null)
-    	        tableDataList = employeeMgr.findAll();
-        return tableDataList;
-    }
+	public List<Employee> getEmployees() {
+		// kvůli řazení musím načíst jen 1x
+		if (tableDataList == null) {
+			if (EmployeeManager.getEmpl().getType() == EmployeeType.OWNER) {
+				tableDataList = employeeMgr.findAll();
+
+			} else {
+				tableDataList = employeeMgr.findAll().stream()
+						.filter(e -> e.getType() == EmployeeType.MANAGER || e.getType() == EmployeeType.EMPLOYEE )
+						.collect(Collectors.toList());
+			}
+		}
+		return tableDataList;
+
+	}
 	
 	public Employee getEmployee() {
 		return employee;
